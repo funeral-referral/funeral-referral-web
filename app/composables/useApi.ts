@@ -1,29 +1,21 @@
-function xsrfToken(): string | undefined {
-  const match = document.cookie.match(/(?:^|; )XSRF-TOKEN=([^;]+)/)
-
-  return match?.[1] ? decodeURIComponent(match[1]) : undefined
-}
-
 export function useApi() {
   const apiBase = useRuntimeConfig().public.apiBase
-
-  async function csrf(): Promise<void> {
-    await $fetch(`${apiBase}/sanctum/csrf-cookie`, { credentials: 'include' })
-  }
+  const token = useCookie<string | null>('auth-token', {
+    default: () => null,
+    maxAge: 60 * 60 * 24 * 7,
+    sameSite: 'lax',
+  })
 
   function api<T>(path: string, options: Parameters<typeof $fetch>[1] = {}) {
-    const token = xsrfToken()
-
     return $fetch<T>(`${apiBase}/api${path}`, {
       ...options,
-      credentials: 'include',
       headers: {
         Accept: 'application/json',
-        ...(token ? { 'X-XSRF-TOKEN': token } : {}),
+        ...(token.value ? { Authorization: `Bearer ${token.value}` } : {}),
         ...(options.headers as Record<string, string> | undefined),
       },
     })
   }
 
-  return { api, csrf }
+  return { api, token }
 }

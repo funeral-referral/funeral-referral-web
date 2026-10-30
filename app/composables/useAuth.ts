@@ -7,12 +7,19 @@ export interface AuthUser {
 
 export function useAuth() {
   const user = useState<AuthUser | null>('auth-user', () => null)
-  const { api, csrf } = useApi()
+  const { api, token } = useApi()
 
   async function fetchUser(): Promise<AuthUser | null> {
+    if (!token.value) {
+      user.value = null
+
+      return null
+    }
+
     try {
       user.value = await api<AuthUser>('/user')
     } catch {
+      token.value = null
       user.value = null
     }
 
@@ -20,16 +27,22 @@ export function useAuth() {
   }
 
   async function login(email: string, password: string): Promise<void> {
-    await csrf()
-    user.value = await api<AuthUser>('/login', {
+    const response = await api<{ token: string; user: AuthUser }>('/login', {
       method: 'POST',
       body: { email, password },
     })
+
+    token.value = response.token
+    user.value = response.user
   }
 
   async function logout(): Promise<void> {
-    await api('/logout', { method: 'POST' })
-    user.value = null
+    try {
+      await api('/logout', { method: 'POST' })
+    } finally {
+      token.value = null
+      user.value = null
+    }
   }
 
   return { user, fetchUser, login, logout }
