@@ -14,6 +14,13 @@ export function useApi() {
         ...(token.value ? { Authorization: `Bearer ${token.value}` } : {}),
         ...(options.headers as Record<string, string> | undefined),
       },
+      onResponseError({ response }) {
+        if (response.status === 401 && !path.startsWith('/login')) {
+          token.value = null
+
+          return navigateTo('/login')
+        }
+      },
     })
   }
 
