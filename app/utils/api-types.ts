@@ -35,6 +35,52 @@ export interface ScoreItem {
   detail: string
 }
 
+export interface CampaignMessage {
+  id: number
+  type: string
+  position: number
+  subject: string | null
+  body: string
+  edited: boolean
+  status: string
+  scheduled_for: string | null
+  sent_at: string | null
+  sent_to: string | null
+}
+
+export interface Reply {
+  id: number
+  from_email: string
+  subject: string | null
+  body: string | null
+  received_at: string
+  campaign_id: number | null
+  home?: { id: number; name: string; city: string | null; state_code: string } | null
+}
+
+export interface Campaign {
+  id: number
+  status: string
+  variant: string
+  generated_by: string
+  approved_at: string | null
+  approved_by?: string | null
+  stopped_reason: string | null
+  stopped_at: string | null
+  created_at: string
+  home?: {
+    id: number
+    name: string
+    city: string | null
+    state_code: string
+    email: string | null
+    ownership_type: string
+    stage: string
+  }
+  messages?: CampaignMessage[]
+  replies?: Reply[]
+}
+
 export interface Home {
   id: number
   name: string
@@ -66,6 +112,43 @@ export interface Home {
   closed_at: string | null
   observations?: Observation[]
   changes?: Change[]
+  campaign?: Campaign | null
+  replies?: Reply[]
+  assigned_to: number | null
+  assignee?: string | null
+  notes?: Note[]
+  referrals?: Referral[]
+  stage_history?: StageChange[]
+}
+
+export interface Note {
+  id: number
+  body: string
+  author: string | null
+  created_at: string
+}
+
+export interface Referral {
+  id: number
+  referred_on: string
+  reference: string | null
+  value_cents: number | null
+  notes: string | null
+  logged_by: string | null
+}
+
+export interface StageChange {
+  id: number
+  from_stage: string | null
+  to_stage: string
+  by: string | null
+  created_at: string
+}
+
+export interface UserRef {
+  id: number
+  name: string
+  email: string
 }
 
 export interface CrawlRun {
@@ -85,6 +168,8 @@ export interface Dashboard {
   totals: { homes: number; closed: number }
   by_state: { state_code: string; total: number; closed: number }[]
   by_ownership: { ownership_type: string; total: number }[]
+  by_stage: Record<string, number>
+  referrals: { total: number; value_cents: number }
   top_prospects: {
     id: number
     name: string

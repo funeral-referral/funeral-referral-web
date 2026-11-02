@@ -4,7 +4,7 @@ import type { Home, Observation } from '~/utils/api-types'
 const route = useRoute()
 const { api } = useApi()
 
-const { data, error } = await useAsyncData(
+const { data, error, refresh } = await useAsyncData(
   () => `home-${route.params.id}`,
   () => api<{ data: Home }>(`/homes/${route.params.id}`),
 )
@@ -61,7 +61,7 @@ function observationsFor(field: string): Observation[] {
           <span class="muted">Ownership{{ home.chain_name ? ` · ${home.chain_name}` : '' }}</span>
         </div>
         <div class="stat">
-          <span class="num">{{ home.stage }}</span>
+          <span class="num">{{ stageLabel(home.stage) }}</span>
           <span class="muted">Pipeline stage</span>
         </div>
         <div class="stat">
@@ -111,6 +111,10 @@ function observationsFor(field: string): Observation[] {
           </tbody>
         </table>
       </div>
+
+      <PipelinePanel :home="home" @changed="refresh()" />
+
+      <OutreachPanel :home="home" @changed="refresh()" />
 
       <div class="panel">
         <h2>Change history</h2>

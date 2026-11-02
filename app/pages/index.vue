@@ -109,6 +109,25 @@ function runClass(status: string): string {
       </div>
 
       <div class="panel">
+        <h2>Pipeline</h2>
+        <table class="tbl">
+          <thead>
+            <tr><th>Stage</th><th class="num">Homes</th></tr>
+          </thead>
+          <tbody>
+            <tr v-for="stage in stageOrder" :key="stage">
+              <td><NuxtLink :to="{ path: '/homes', query: { stage } }">{{ stageLabel(stage) }}</NuxtLink></td>
+              <td class="num">{{ data.by_stage[stage] ?? 0 }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="muted">
+          {{ data.referrals.total }} referrals received, worth {{ formatMoney(data.referrals.value_cents) }} in total.
+          <NuxtLink :to="{ path: '/homes', query: { assigned_to: 'me' } }">My homes</NuxtLink>
+        </p>
+      </div>
+
+      <div class="panel">
         <h2>Sources</h2>
         <table class="tbl">
           <thead>

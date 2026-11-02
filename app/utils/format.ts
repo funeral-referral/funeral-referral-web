@@ -40,6 +40,76 @@ export function ownershipLabel(type: string): string {
   return ownershipLabels[type] ?? type
 }
 
+export const messageTypeLabels: Record<string, string> = {
+  first_email: 'First email',
+  follow_up_1: 'Follow-up 1',
+  follow_up_2: 'Follow-up 2',
+  call_script: 'Call script (never sent)',
+}
+
+export const messageStatusLabels: Record<string, string> = {
+  draft: 'Draft',
+  ready: 'Ready to use',
+  scheduled: 'Scheduled',
+  sending: 'Sending',
+  sent: 'Sent',
+  skipped: 'Cancelled',
+  failed: 'Failed',
+}
+
+export const stopReasonLabels: Record<string, string> = {
+  replied: 'They replied',
+  opted_out: 'Asked to stop',
+  unsubscribed: 'Unsubscribed',
+  manual: 'Stopped by hand',
+  suppressed: 'Address suppressed',
+  no_email: 'No email address',
+  send_failed: 'Send failed',
+}
+
+export function messageTypeLabel(type: string): string {
+  return messageTypeLabels[type] ?? type
+}
+
+export function messageStatusLabel(status: string): string {
+  return messageStatusLabels[status] ?? status
+}
+
+export function stopReasonLabel(reason: string | null): string {
+  return reason === null ? '' : (stopReasonLabels[reason] ?? reason)
+}
+
+export function campaignClass(status: string): string {
+  return status === 'active' ? 'good' : status === 'stopped' ? 'bad' : status === 'draft' ? 'warn' : ''
+}
+
+export function apiErrorMessage(error: unknown): string {
+  const data = (error as { data?: { message?: string; errors?: Record<string, string[]> } }).data
+
+  return Object.values(data?.errors ?? {}).flat()[0] ?? data?.message ?? 'Something went wrong. Please try again.'
+}
+
+export const stageOrder = ['found', 'contacted', 'replied', 'meeting', 'active_partner', 'not_interested']
+
+export const stageLabels: Record<string, string> = {
+  found: 'Found',
+  contacted: 'Contacted',
+  replied: 'Replied',
+  meeting: 'Meeting',
+  active_partner: 'Active partner',
+  not_interested: 'Not interested',
+}
+
+export function stageLabel(stage: string | null): string {
+  return stage === null ? '—' : (stageLabels[stage] ?? stage)
+}
+
+export function formatMoney(cents: number | null | undefined): string {
+  return cents === null || cents === undefined
+    ? '—'
+    : (cents / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' })
+}
+
 export function changeLabel(type: string): string {
   return changeTypeLabels[type] ?? type
 }

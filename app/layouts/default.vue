@@ -5,6 +5,7 @@ const links = [
   { to: '/', label: 'Dashboard' },
   { to: '/homes', label: 'Homes' },
   { to: '/changes', label: 'Changed this week' },
+  { to: '/outreach', label: 'Outreach' },
   { to: '/crawl-runs', label: 'Crawl runs' },
 ]
 
@@ -178,6 +179,63 @@ body {
 }
 .error {
   color: #b91c1c;
+}
+.btn {
+  padding: 0.4rem 0.9rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.4rem;
+  background: #fff;
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+.btn.primary {
+  border-color: #1d4ed8;
+  background: #1d4ed8;
+  color: #fff;
+}
+.btn.danger {
+  border-color: #fca5a5;
+  color: #991b1b;
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.75rem 0;
+}
+.field {
+  display: grid;
+  gap: 0.2rem;
+  margin-bottom: 0.6rem;
+  font-size: 0.8rem;
+  color: #4b5563;
+}
+.field input,
+.field textarea {
+  padding: 0.45rem 0.6rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.4rem;
+  font: inherit;
+  font-size: 0.9rem;
+  color: #1f2937;
+}
+.msg {
+  margin-bottom: 0.9rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  background: #f9fafb;
+}
+.msg pre {
+  margin: 0.4rem 0 0;
+  font: inherit;
+  font-size: 0.9rem;
+  white-space: pre-wrap;
 }
 </style>
 
