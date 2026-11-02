@@ -11,6 +11,7 @@ const homeStatus = ref(String(route.query.status ?? ''))
 const ownership = ref(String(route.query.ownership ?? ''))
 const stage = ref(String(route.query.stage ?? ''))
 const assignedTo = ref(String(route.query.assigned_to ?? ''))
+const county = ref(String(route.query.county ?? ''))
 const sort = ref('-partner_score')
 const page = ref(1)
 
@@ -21,7 +22,7 @@ watch(search, (value) => {
     q.value = value
   }, 300)
 })
-watch([q, state, homeStatus, ownership, stage, assignedTo, sort], () => {
+watch([q, state, homeStatus, ownership, stage, assignedTo, county, sort], () => {
   page.value = 1
 })
 
@@ -32,6 +33,7 @@ const params = computed(() => ({
   ownership_type: ownership.value || undefined,
   stage: stage.value || undefined,
   assigned_to: assignedTo.value || undefined,
+  county: county.value || undefined,
   sort: sort.value,
   page: page.value,
   per_page: 25,
@@ -108,6 +110,11 @@ const states = computed(() => dashboard.value?.by_state.map((row) => row.state_c
         </select>
       </label>
     </div>
+
+    <p v-if="county" class="muted">
+      Showing one county only.
+      <a href="#" @click.prevent="county = ''">Clear county filter</a>
+    </p>
 
     <p v-if="error" class="error">Could not load homes.</p>
 

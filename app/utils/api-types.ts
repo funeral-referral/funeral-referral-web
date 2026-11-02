@@ -145,6 +145,18 @@ export interface StageChange {
   created_at: string
 }
 
+export interface MapRegion {
+  total: number
+  avg_score: number | null
+  contacted: number
+  partners: number
+}
+
+export interface MapData {
+  states: (MapRegion & { state_code: string; unplaced: number })[]
+  counties: (MapRegion & { fips: string; state_code: string })[]
+}
+
 export interface UserRef {
   id: number
   name: string

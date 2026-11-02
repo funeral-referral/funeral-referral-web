@@ -4,6 +4,7 @@ const { user, logout } = useAuth()
 const links = [
   { to: '/', label: 'Dashboard' },
   { to: '/homes', label: 'Homes' },
+  { to: '/map', label: 'Map' },
   { to: '/changes', label: 'Changed this week' },
   { to: '/outreach', label: 'Outreach' },
   { to: '/crawl-runs', label: 'Crawl runs' },
