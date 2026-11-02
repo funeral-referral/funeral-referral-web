@@ -73,6 +73,41 @@ function runClass(status: string): string {
         </div>
       </div>
 
+      <div class="cols">
+        <div class="panel">
+          <h2>Top prospects</h2>
+          <table class="tbl">
+            <thead>
+              <tr><th class="num">Score</th><th>Home</th><th>Ownership</th></tr>
+            </thead>
+            <tbody>
+              <tr v-for="home in data.top_prospects" :key="home.id">
+                <td class="num">{{ home.partner_score }}</td>
+                <td>
+                  <NuxtLink :to="`/homes/${home.id}`">{{ home.name }}</NuxtLink>
+                  <div class="muted">{{ [home.city, home.state_code].filter(Boolean).join(', ') }}</div>
+                </td>
+                <td>{{ ownershipLabel(home.ownership_type) }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="muted"><NuxtLink to="/homes">See all homes ranked by score</NuxtLink></p>
+        </div>
+
+        <div class="panel">
+          <h2>Ownership mix</h2>
+          <table class="tbl">
+            <tbody>
+              <tr v-for="row in data.by_ownership" :key="row.ownership_type">
+                <td><NuxtLink :to="{ path: '/homes', query: { ownership: row.ownership_type } }">{{ ownershipLabel(row.ownership_type) }}</NuxtLink></td>
+                <td class="num">{{ row.total }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="muted">"Unknown" means no owner, website or phone is on record for those homes yet.</p>
+        </div>
+      </div>
+
       <div class="panel">
         <h2>Sources</h2>
         <table class="tbl">

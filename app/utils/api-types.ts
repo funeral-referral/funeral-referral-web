@@ -27,6 +27,14 @@ export interface Change {
   source?: SourceRef | null
 }
 
+export interface ScoreItem {
+  key: string
+  label: string
+  points: number
+  max: number
+  detail: string
+}
+
 export interface Home {
   id: number
   name: string
@@ -43,6 +51,7 @@ export interface Home {
   license_number: string | null
   license_status: string | null
   licensed_director: string | null
+  owner_name: string | null
   ownership_type: string
   chain_name: string | null
   offers_burial: boolean | null
@@ -50,6 +59,7 @@ export interface Home {
   offers_preneed: boolean | null
   sells_insurance: boolean | null
   partner_score: number | null
+  partner_score_breakdown: ScoreItem[] | null
   stage: string
   first_seen_at: string | null
   last_seen_at: string | null
@@ -75,6 +85,14 @@ export interface Dashboard {
   totals: { homes: number; closed: number }
   by_state: { state_code: string; total: number; closed: number }[]
   by_ownership: { ownership_type: string; total: number }[]
+  top_prospects: {
+    id: number
+    name: string
+    city: string | null
+    state_code: string
+    partner_score: number
+    ownership_type: string
+  }[]
   changes: {
     window_days: number
     baseline_until: string | null

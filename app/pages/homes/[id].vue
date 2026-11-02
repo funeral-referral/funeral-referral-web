@@ -24,6 +24,7 @@ const fields: { key: keyof Home; label: string }[] = [
   { key: 'license_number', label: 'Licence number' },
   { key: 'license_status', label: 'Licence status' },
   { key: 'licensed_director', label: 'Licensed director' },
+  { key: 'owner_name', label: 'Owner' },
   { key: 'offers_preneed', label: 'Offers pre-need' },
   { key: 'offers_burial', label: 'Offers burial' },
   { key: 'offers_cremation', label: 'Offers cremation' },
@@ -56,8 +57,8 @@ function observationsFor(field: string): Observation[] {
           <span class="muted">Partner score{{ home.partner_score === null ? ' (not scored yet)' : '' }}</span>
         </div>
         <div class="stat">
-          <span class="num">{{ home.ownership_type }}</span>
-          <span class="muted">Ownership</span>
+          <span class="num">{{ ownershipLabel(home.ownership_type) }}</span>
+          <span class="muted">Ownership{{ home.chain_name ? ` · ${home.chain_name}` : '' }}</span>
         </div>
         <div class="stat">
           <span class="num">{{ home.stage }}</span>
@@ -67,6 +68,23 @@ function observationsFor(field: string): Observation[] {
           <span class="num">{{ formatDate(home.first_seen_at) }}</span>
           <span class="muted">First seen</span>
         </div>
+      </div>
+
+      <div v-if="home.partner_score_breakdown?.length" class="panel">
+        <h2>Why this score</h2>
+        <table class="tbl">
+          <thead>
+            <tr><th>Factor</th><th class="num">Points</th><th>Reason</th></tr>
+          </thead>
+          <tbody>
+            <tr v-for="item in home.partner_score_breakdown" :key="item.key">
+              <td>{{ item.label }}</td>
+              <td class="num">{{ item.points }} / {{ item.max }}</td>
+              <td class="muted">{{ item.detail }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="muted">Total {{ home.partner_score }} out of 100. The weights are judgement calls and can be tuned.</p>
       </div>
 
       <div class="panel">

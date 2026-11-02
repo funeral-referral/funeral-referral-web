@@ -26,6 +26,18 @@ export const changeTypeLabels: Record<string, string> = {
   phone_changed: 'Phone changed',
   email_changed: 'Email changed',
   address_changed: 'Address changed',
+  owner_changed: 'Owner changed',
+}
+
+export const ownershipLabels: Record<string, string> = {
+  independent: 'Independent',
+  family_owned: 'Family-owned',
+  chain: 'Chain',
+  unknown: 'Unknown',
+}
+
+export function ownershipLabel(type: string): string {
+  return ownershipLabels[type] ?? type
 }
 
 export function changeLabel(type: string): string {
@@ -45,6 +57,7 @@ export const fieldLabels: Record<string, string> = {
   license_number: 'Licence number',
   license_status: 'Licence status',
   licensed_director: 'Licensed director',
+  owner_name: 'Owner',
   latitude: 'Latitude',
   longitude: 'Longitude',
   offers_burial: 'Offers burial',

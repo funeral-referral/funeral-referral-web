@@ -8,7 +8,8 @@ const search = ref(String(route.query.q ?? ''))
 const q = ref(search.value)
 const state = ref(String(route.query.state ?? ''))
 const homeStatus = ref(String(route.query.status ?? ''))
-const sort = ref('name')
+const ownership = ref(String(route.query.ownership ?? ''))
+const sort = ref('-partner_score')
 const page = ref(1)
 
 let timer: ReturnType<typeof setTimeout> | undefined
@@ -18,7 +19,7 @@ watch(search, (value) => {
     q.value = value
   }, 300)
 })
-watch([q, state, homeStatus, sort], () => {
+watch([q, state, homeStatus, ownership, sort], () => {
   page.value = 1
 })
 
@@ -26,6 +27,7 @@ const params = computed(() => ({
   q: q.value || undefined,
   state: state.value || undefined,
   status: homeStatus.value || undefined,
+  ownership_type: ownership.value || undefined,
   sort: sort.value,
   page: page.value,
   per_page: 25,
@@ -66,8 +68,19 @@ const states = computed(() => dashboard.value?.by_state.map((row) => row.state_c
         </select>
       </label>
       <label>
+        Ownership
+        <select v-model="ownership">
+          <option value="">Any</option>
+          <option value="independent">Independent</option>
+          <option value="family_owned">Family-owned</option>
+          <option value="chain">Chain</option>
+          <option value="unknown">Unknown</option>
+        </select>
+      </label>
+      <label>
         Sort
         <select v-model="sort">
+          <option value="-partner_score">Highest score</option>
           <option value="name">Name</option>
           <option value="state_code">State</option>
           <option value="-first_seen_at">Newest first</option>
@@ -81,11 +94,13 @@ const states = computed(() => dashboard.value?.by_state.map((row) => row.state_c
       <p class="muted">{{ data.meta.total }} homes{{ pending ? ' · loading…' : '' }}</p>
       <table class="tbl">
         <thead>
-          <tr><th>Name</th><th>Location</th><th>Phone</th><th>Licence</th><th>First seen</th></tr>
+          <tr><th class="num">Score</th><th>Name</th><th>Ownership</th><th>Location</th><th>Phone</th><th>Licence</th><th>First seen</th></tr>
         </thead>
         <tbody>
           <tr v-for="home in data.data" :key="home.id">
+            <td class="num">{{ home.partner_score ?? '—' }}</td>
             <td><NuxtLink :to="`/homes/${home.id}`">{{ home.name }}</NuxtLink></td>
+            <td>{{ ownershipLabel(home.ownership_type) }}</td>
             <td>{{ [home.city, home.state_code].filter(Boolean).join(', ') }}</td>
             <td>{{ formatValue(home.phone) }}</td>
             <td>
@@ -99,7 +114,7 @@ const states = computed(() => dashboard.value?.by_state.map((row) => row.state_c
             <td>{{ formatDate(home.first_seen_at) }}</td>
           </tr>
           <tr v-if="!data.data.length">
-            <td colspan="5" class="muted">No homes match these filters.</td>
+            <td colspan="7" class="muted">No homes match these filters.</td>
           </tr>
         </tbody>
       </table>
