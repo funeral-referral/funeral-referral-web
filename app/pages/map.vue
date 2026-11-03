@@ -58,7 +58,11 @@ const maxValue = computed(() => {
 function fill(row: MapRegion | undefined): string {
   const value = valueOf(row)
 
-  return value === null || value === 0 ? '#f3f4f6' : `rgba(29, 78, 216, ${0.15 + 0.85 * (value / maxValue.value)})`
+  if (value === null || value === 0) {
+    return 'var(--map-empty)'
+  }
+
+  return `color-mix(in srgb, var(--heat) ${Math.round(18 + 82 * (value / maxValue.value))}%, var(--map-empty))`
 }
 
 function pickState(code: string) {
@@ -178,10 +182,8 @@ function pickListItem(id: string) {
             v-for="shape in usStates"
             :key="shape.id"
             :d="shape.d"
-            :fill="selectedState ? '#f9fafb' : fill(states.get(shape.code))"
+            :style="{ fill: selectedState ? 'var(--map-land)' : fill(states.get(shape.code)) }"
             :class="{ live: !selectedState && states.has(shape.code) }"
-            stroke="#fff"
-            stroke-width="0.6"
             :tabindex="!selectedState && states.has(shape.code) ? 0 : -1"
             @click="pickState(shape.code)"
             @keydown.enter="pickState(shape.code)"
@@ -192,10 +194,8 @@ function pickListItem(id: string) {
             v-for="shape in visibleCounties"
             :key="shape.id"
             :d="shape.d"
-            :fill="fill(counties.get(shape.id))"
+            :style="{ fill: fill(counties.get(shape.id)) }"
             :class="{ live: counties.has(shape.id), chosen: shape.id === selectedCounty }"
-            stroke="#fff"
-            stroke-width="0.8"
             vector-effect="non-scaling-stroke"
             tabindex="0"
             @click="pickCounty(shape.id)"
@@ -205,7 +205,7 @@ function pickListItem(id: string) {
           </path>
         </svg>
         <p class="muted">
-          Darker means more
+          A stronger colour means more
           {{ metric === 'avg_score' ? 'highly scored homes' : metricLabels[metric].toLowerCase() }}
           (scale 0 to {{ maxValue }}).
           {{ pending ? 'Loading…' : '' }}
@@ -259,17 +259,23 @@ function pickListItem(id: string) {
   height: auto;
   max-height: 34rem;
 }
+.map path {
+  stroke: var(--map-stroke);
+  stroke-width: 0.7;
+  transition: fill 0.2s;
+}
 .map path.live {
   cursor: pointer;
 }
 .map path.live:hover,
 .map path.live:focus {
-  stroke: #1f2937;
-  stroke-width: 1.2;
+  stroke: var(--text);
+  stroke-width: 1.4;
   outline: none;
+  box-shadow: none;
 }
 .map path.chosen {
-  stroke: #111827;
-  stroke-width: 2;
+  stroke: var(--text);
+  stroke-width: 2.2;
 }
 </style>

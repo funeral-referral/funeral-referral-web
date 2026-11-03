@@ -4,6 +4,20 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   ssr: false,
   devServer: { port: 3000 },
+  css: ['~/assets/css/theme.css'],
+  app: {
+    head: {
+      meta: [{ name: 'color-scheme', content: 'light dark' }],
+      // Runs before first paint so a saved dark theme never flashes white.
+      script: [
+        {
+          innerHTML:
+            "(function(){try{var m=document.cookie.match(/(?:^|; )theme=([^;]+)/);var c=m?decodeURIComponent(m[1]):'system';var d=c==='dark'||(c!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.dataset.theme=d?'dark':'light'}catch(e){}})()",
+          tagPosition: 'head',
+        },
+      ],
+    },
+  },
   runtimeConfig: {
     public: {
       apiBase: 'http://localhost:8000',

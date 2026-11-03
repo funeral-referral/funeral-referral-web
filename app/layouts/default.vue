@@ -19,17 +19,23 @@ async function signOut() {
 <template>
   <div class="shell">
     <header class="bar">
-      <div class="left">
-        <NuxtLink to="/" class="brand">Funeral Referral</NuxtLink>
-        <nav class="nav">
+      <div class="inner">
+        <NuxtLink to="/" class="brand">
+          <span class="mark" aria-hidden="true" />
+          Funeral Referral
+        </NuxtLink>
+        <nav class="nav" aria-label="Main">
           <NuxtLink v-for="link in links" :key="link.to" :to="link.to" class="navlink">
             {{ link.label }}
           </NuxtLink>
         </nav>
-      </div>
-      <div v-if="user" class="who">
-        <span>{{ user.email }}</span>
-        <button type="button" @click="signOut">Sign out</button>
+        <div class="who">
+          <ThemeToggle />
+          <template v-if="user">
+            <span class="email">{{ user.email }}</span>
+            <button type="button" class="btn" @click="signOut">Sign out</button>
+          </template>
+        </div>
       </div>
     </header>
     <main class="content">
@@ -38,253 +44,93 @@ async function signOut() {
   </div>
 </template>
 
-<style>
-body {
-  margin: 0;
-  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
-  color: #1f2937;
-  background: #f9fafb;
-}
-.content h1 {
-  margin: 0 0 1rem;
-  font-size: 1.5rem;
-}
-.content h2 {
-  margin: 0 0 0.75rem;
-  font-size: 1.05rem;
-}
-.muted {
-  color: #6b7280;
-  font-size: 0.875rem;
-}
-.stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-.stat {
-  padding: 1rem;
-  background: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 0.6rem;
-}
-.stat .num {
-  display: block;
-  font-size: 1.7rem;
-  font-weight: 600;
-}
-.panel {
-  margin-bottom: 1.5rem;
-  padding: 1rem 1.25rem;
-  background: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 0.6rem;
-  overflow-x: auto;
-}
-.cols {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
-  gap: 1rem;
-}
-.tbl {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.9rem;
-}
-.tbl th {
-  text-align: left;
-  font-weight: 600;
-  color: #4b5563;
-  white-space: nowrap;
-}
-.tbl th,
-.tbl td {
-  padding: 0.45rem 0.6rem;
-  border-bottom: 1px solid #f3f4f6;
-  vertical-align: top;
-}
-.tbl .num {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-.tbl a,
-.content a {
-  color: #1d4ed8;
-}
-.pill {
-  display: inline-block;
-  padding: 0.1rem 0.5rem;
-  border-radius: 999px;
-  background: #e5e7eb;
-  font-size: 0.78rem;
-  white-space: nowrap;
-}
-.pill.good {
-  background: #dcfce7;
-  color: #166534;
-}
-.pill.bad {
-  background: #fee2e2;
-  color: #991b1b;
-}
-.pill.warn {
-  background: #fef3c7;
-  color: #92400e;
-}
-.filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  align-items: end;
-  margin-bottom: 1rem;
-}
-.filters label {
-  display: grid;
-  gap: 0.2rem;
-  font-size: 0.8rem;
-  color: #4b5563;
-}
-.filters input[type='text'],
-.filters select {
-  padding: 0.45rem 0.6rem;
-  border: 1px solid #d1d5db;
-  border-radius: 0.4rem;
-  font: inherit;
-  background: #fff;
-}
-.filters .check {
-  display: flex;
-  gap: 0.4rem;
-  align-items: center;
-  padding-bottom: 0.5rem;
-}
-.pager {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  margin-top: 0.75rem;
-  font-size: 0.9rem;
-}
-.pager button {
-  padding: 0.35rem 0.8rem;
-  border: 1px solid #d1d5db;
-  border-radius: 0.4rem;
-  background: #fff;
-  font: inherit;
-  cursor: pointer;
-}
-.pager button:disabled {
-  opacity: 0.5;
-  cursor: default;
-}
-.error {
-  color: #b91c1c;
-}
-.btn {
-  padding: 0.4rem 0.9rem;
-  border: 1px solid #d1d5db;
-  border-radius: 0.4rem;
-  background: #fff;
-  font: inherit;
-  font-size: 0.9rem;
-  cursor: pointer;
-}
-.btn.primary {
-  border-color: #1d4ed8;
-  background: #1d4ed8;
-  color: #fff;
-}
-.btn.danger {
-  border-color: #fca5a5;
-  color: #991b1b;
-}
-.btn:disabled {
-  opacity: 0.5;
-  cursor: default;
-}
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin: 0.75rem 0;
-}
-.field {
-  display: grid;
-  gap: 0.2rem;
-  margin-bottom: 0.6rem;
-  font-size: 0.8rem;
-  color: #4b5563;
-}
-.field input,
-.field textarea {
-  padding: 0.45rem 0.6rem;
-  border: 1px solid #d1d5db;
-  border-radius: 0.4rem;
-  font: inherit;
-  font-size: 0.9rem;
-  color: #1f2937;
-}
-.msg {
-  margin-bottom: 0.9rem;
-  padding: 0.75rem 1rem;
-  border: 1px solid #e5e7eb;
-  border-radius: 0.5rem;
-  background: #f9fafb;
-}
-.msg pre {
-  margin: 0.4rem 0 0;
-  font: inherit;
-  font-size: 0.9rem;
-  white-space: pre-wrap;
-}
-</style>
-
 <style scoped>
 .bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  flex-wrap: wrap;
-  padding: 0.75rem 1.5rem;
-  background: #fff;
-  border-bottom: 1px solid #e5e7eb;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: saturate(160%) blur(12px);
 }
-.left {
+.inner {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1.25rem;
   flex-wrap: wrap;
+  max-width: 76rem;
+  margin: 0 auto;
+  padding: 0.7rem 1.5rem;
 }
 .brand {
-  font-weight: 600;
-  color: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  color: var(--text);
   text-decoration: none;
+}
+.mark {
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 4px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
 }
 .nav {
   display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
+  flex: 1;
+  gap: 0.2rem;
+  overflow-x: auto;
 }
 .navlink {
-  color: #4b5563;
+  padding: 0.38rem 0.8rem;
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 0.88rem;
+  font-weight: 500;
+  white-space: nowrap;
   text-decoration: none;
-  font-size: 0.9rem;
+  transition: background-color 0.15s, color 0.15s;
 }
-.navlink.router-link-exact-active {
-  color: #111827;
-  font-weight: 600;
+.navlink:hover {
+  color: var(--text);
+  background: var(--surface-2);
+}
+.navlink.router-link-exact-active,
+.navlink.router-link-active:not([href='/']) {
+  color: var(--accent);
+  background: var(--accent-soft);
 }
 .who {
   display: flex;
-  gap: 1rem;
+  gap: 0.75rem;
   align-items: center;
-  font-size: 0.9rem;
+  margin-left: auto;
+  font-size: 0.85rem;
+}
+@media (max-width: 1100px) {
+  .nav {
+    order: 3;
+    flex-basis: 100%;
+  }
+}
+.email {
+  color: var(--muted);
 }
 .content {
-  max-width: 72rem;
+  max-width: 76rem;
   margin: 0 auto;
-  padding: 1.5rem;
+  padding: 1.75rem 1.5rem 3rem;
+}
+@media (max-width: 640px) {
+  .email {
+    display: none;
+  }
+  .inner,
+  .content {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }
 </style>
