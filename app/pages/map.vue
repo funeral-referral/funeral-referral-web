@@ -62,7 +62,7 @@ function fill(row: MapRegion | undefined): string {
     return 'var(--map-empty)'
   }
 
-  return `color-mix(in srgb, var(--heat) ${Math.round(18 + 82 * (value / maxValue.value))}%, var(--map-empty))`
+  return `color-mix(in srgb, var(--heat) ${Math.round(100 * (value / maxValue.value))}%, var(--map-low))`
 }
 
 function pickState(code: string) {
@@ -184,7 +184,7 @@ function pickListItem(id: string) {
             :d="shape.d"
             :style="{ fill: selectedState ? 'var(--map-land)' : fill(states.get(shape.code)) }"
             :class="{ live: !selectedState && states.has(shape.code) }"
-            :tabindex="!selectedState && states.has(shape.code) ? 0 : -1"
+            :tabindex="!selectedState && states.has(shape.code) ? 0 : undefined"
             @click="pickState(shape.code)"
             @keydown.enter="pickState(shape.code)"
           >
@@ -263,6 +263,9 @@ function pickListItem(id: string) {
   stroke: var(--map-stroke);
   stroke-width: 0.7;
   transition: fill 0.2s;
+}
+.map path:focus {
+  outline: none;
 }
 .map path.live {
   cursor: pointer;

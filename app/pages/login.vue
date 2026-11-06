@@ -28,11 +28,8 @@ async function submit() {
   <div class="wrap">
     <div class="corner"><ThemeToggle /></div>
     <form class="card" @submit.prevent="submit">
-      <div class="head">
-        <span class="mark" aria-hidden="true" />
-        <h1>Funeral Referral</h1>
-        <p class="sub">Sign in to continue</p>
-      </div>
+      <h1>Funeral Referral</h1>
+      <p class="sub">Sign in to continue.</p>
 
       <label>
         Email
@@ -57,9 +54,7 @@ async function submit() {
   display: grid;
   place-items: center;
   padding: 1rem;
-  background:
-    radial-gradient(60rem 30rem at 50% -10%, var(--accent-soft), transparent 70%),
-    var(--bg);
+  background: var(--bg);
 }
 .corner {
   position: absolute;
@@ -67,45 +62,35 @@ async function submit() {
   right: 1rem;
 }
 .card {
-  width: min(22rem, 100%);
+  width: min(21rem, 100%);
   display: grid;
-  gap: 1rem;
-  padding: 2rem;
+  gap: 0.9rem;
+  padding: 1.75rem;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
-}
-.head {
-  display: grid;
-  gap: 0.25rem;
-  justify-items: start;
-}
-.mark {
-  width: 1.4rem;
-  height: 1.4rem;
-  margin-bottom: 0.5rem;
-  border-radius: 7px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
 }
 h1 {
   margin: 0;
-  font-size: 1.4rem;
-  font-weight: 650;
+  font-family: var(--serif);
+  font-size: 1.6rem;
+  font-weight: 600;
 }
 .sub {
-  margin: 0;
+  margin: -0.5rem 0 0.25rem;
   color: var(--muted);
 }
 label {
   display: grid;
   gap: 0.3rem;
   font-size: 0.85rem;
-  font-weight: 500;
   color: var(--muted);
 }
+input {
+  width: 100%;
+}
 .btn {
-  padding: 0.6rem;
+  padding: 0.55rem;
 }
 .error {
   margin: 0;

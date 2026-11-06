@@ -34,9 +34,9 @@ const options: { value: ThemeChoice; label: string; path: string }[] = [
   display: inline-flex;
   padding: 3px;
   gap: 2px;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  background: var(--surface-2);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
 }
 .toggle button {
   display: grid;
@@ -45,7 +45,7 @@ const options: { value: ThemeChoice; label: string; path: string }[] = [
   height: 1.8rem;
   padding: 0;
   border: 0;
-  border-radius: 999px;
+  border-radius: 3px;
   background: transparent;
   color: var(--muted);
   cursor: pointer;
@@ -54,9 +54,8 @@ const options: { value: ThemeChoice; label: string; path: string }[] = [
   color: var(--text);
 }
 .toggle button.on {
-  background: var(--surface);
+  background: var(--accent-soft);
   color: var(--accent);
-  box-shadow: var(--shadow);
 }
 .sr {
   position: absolute;

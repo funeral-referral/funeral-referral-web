@@ -1,68 +1,68 @@
-/* Design tokens. The theme is chosen by data-theme on <html>, set before first paint. */
+/* Colour tokens. The theme is chosen by data-theme on <html>, set before first paint. */
 :root {
   color-scheme: light;
-  --bg: #f4f5f8;
-  --surface: #ffffff;
-  --surface-2: #f8f9fb;
-  --border: #e4e7ee;
-  --border-strong: #cdd2dd;
-  --text: #0f172a;
-  --muted: #64748b;
-  --accent: #4f46e5;
-  --accent-hover: #4338ca;
-  --accent-soft: #eef0ff;
+  --bg: #f5f4ef;
+  --surface: #fdfdfb;
+  --surface-2: #f0efe9;
+  --border: #e0ddd3;
+  --border-strong: #c9c5b8;
+  --text: #1c1b18;
+  --muted: #66635a;
+  --accent: #1f5c4a;
+  --accent-hover: #174536;
+  --accent-soft: #e3eee9;
   --accent-contrast: #ffffff;
-  --link: #4338ca;
-  --good-bg: #dcfce7;
-  --good-fg: #166534;
-  --bad-bg: #fee2e2;
-  --bad-fg: #991b1b;
-  --warn-bg: #fef3c7;
-  --warn-fg: #92400e;
-  --pill-bg: #eceff4;
-  --pill-fg: #334155;
-  --danger: #b91c1c;
-  --danger-border: #fca5a5;
-  --shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 4px 16px rgba(15, 23, 42, 0.05);
-  --ring: 0 0 0 3px rgba(79, 70, 229, 0.25);
+  --link: #1f5c4a;
+  --good-bg: #e0eedf;
+  --good-fg: #1f5c2e;
+  --bad-bg: #f6e1de;
+  --bad-fg: #8a2a20;
+  --warn-bg: #f4ead0;
+  --warn-fg: #7a5a12;
+  --pill-bg: #ebe9e1;
+  --pill-fg: #46443d;
+  --danger: #a3281d;
+  --danger-border: #e0a79f;
+  --ring: 0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent);
   --heat: #4f46e5;
+  --map-low: #dfe3f7;
   --map-empty: #eceff4;
   --map-land: #f1f3f7;
-  --map-stroke: #ffffff;
-  --radius: 14px;
-  --radius-sm: 9px;
+  --map-stroke: #fdfdfb;
+  --radius: 8px;
+  --radius-sm: 5px;
+  --serif: 'Iowan Old Style', Charter, 'Palatino Linotype', Georgia, serif;
 }
 
 :root[data-theme='dark'] {
   color-scheme: dark;
-  --bg: #0a0a0a;
-  --surface: #121212;
-  --surface-2: #191919;
-  --border: #262626;
-  --border-strong: #3a3a3a;
-  --text: #ededed;
-  --muted: #9a9a9a;
-  --accent: #818cf8;
-  --accent-hover: #a5b4fc;
-  --accent-soft: #262626;
-  --accent-contrast: #0a0a0a;
-  --link: #a5b4fc;
-  --good-bg: #123524;
-  --good-fg: #86efac;
-  --bad-bg: #3b1620;
-  --bad-fg: #fca5a5;
-  --warn-bg: #3a2c10;
-  --warn-fg: #fcd34d;
-  --pill-bg: #262626;
-  --pill-fg: #d4d4d4;
-  --danger: #f87171;
-  --danger-border: #7f2a35;
-  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.25);
-  --ring: 0 0 0 3px rgba(129, 140, 248, 0.35);
+  --bg: #0f0f0e;
+  --surface: #171716;
+  --surface-2: #1e1e1c;
+  --border: #2d2d2a;
+  --border-strong: #44443f;
+  --text: #ebe9e3;
+  --muted: #9b988f;
+  --accent: #79b99f;
+  --accent-hover: #98ccb6;
+  --accent-soft: #202522;
+  --accent-contrast: #0f0f0e;
+  --link: #8fcab2;
+  --good-bg: #16301f;
+  --good-fg: #8fd19e;
+  --bad-bg: #3a1a17;
+  --bad-fg: #f0a79e;
+  --warn-bg: #35290e;
+  --warn-fg: #e8c76a;
+  --pill-bg: #262624;
+  --pill-fg: #cfccc3;
+  --danger: #ef7d70;
+  --danger-border: #6b2d27;
   --heat: #818cf8;
-  --map-empty: #1f1f1f;
-  --map-land: #151515;
-  --map-stroke: #0a0a0a;
+  --map-low: #2b3366;
+  --map-empty: #1c2435;
+  --map-land: #151b29;
+  --map-stroke: #0f0f0e;
 }
 
 *,
@@ -83,29 +83,27 @@ body {
 
 a {
   color: var(--link);
-  text-underline-offset: 2px;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
 }
 
 :focus-visible {
   outline: none;
   box-shadow: var(--ring);
-  border-radius: 6px;
-}
-
-h1,
-h2 {
-  letter-spacing: -0.02em;
 }
 
 .content h1 {
   margin: 0 0 1.25rem;
-  font-size: 1.75rem;
-  font-weight: 650;
+  font-family: var(--serif);
+  font-size: 1.85rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
 }
 
 .content h2 {
-  margin: 0 0 0.85rem;
-  font-size: 1.05rem;
+  margin: 0 0 0.8rem;
+  font-size: 1rem;
   font-weight: 600;
 }
 
@@ -118,14 +116,13 @@ h2 {
   color: var(--danger);
 }
 
-/* Cards and layout */
+/* Surfaces: flat, with a hairline border */
 .panel {
   margin-bottom: 1.25rem;
-  padding: 1.25rem 1.4rem;
+  padding: 1.1rem 1.3rem;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
   overflow-x: auto;
 }
 
@@ -144,18 +141,17 @@ h2 {
 }
 
 .stat {
-  padding: 1.1rem 1.25rem;
+  padding: 1rem 1.2rem;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
 }
 
 .stat .num {
   display: block;
+  font-family: var(--serif);
   font-size: 1.9rem;
-  font-weight: 650;
-  letter-spacing: -0.03em;
+  font-weight: 600;
   line-height: 1.2;
 }
 
@@ -168,17 +164,15 @@ h2 {
 
 .tbl th {
   text-align: left;
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
   color: var(--muted);
   white-space: nowrap;
 }
 
 .tbl th,
 .tbl td {
-  padding: 0.6rem 0.75rem;
+  padding: 0.55rem 0.75rem 0.55rem 0;
   border-bottom: 1px solid var(--border);
   vertical-align: top;
 }
@@ -194,18 +188,18 @@ h2 {
 .tbl .num {
   text-align: right;
   font-variant-numeric: tabular-nums;
+  padding-right: 0.4rem;
 }
 
-/* Pills */
+/* Status tags */
 .pill {
   display: inline-block;
   margin-right: 0.25rem;
-  padding: 0.12rem 0.6rem;
-  border-radius: 999px;
+  padding: 0.05rem 0.45rem;
+  border-radius: 4px;
   background: var(--pill-bg);
   color: var(--pill-fg);
-  font-size: 0.76rem;
-  font-weight: 500;
+  font-size: 0.78rem;
   white-space: nowrap;
 }
 
@@ -230,13 +224,33 @@ input[type='text'],
 input[type='email'],
 input[type='password'],
 textarea {
-  padding: 0.5rem 0.7rem;
+  padding: 0.45rem 0.65rem;
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-sm);
-  background: var(--surface);
+  background-color: var(--surface);
   color: var(--text);
   font: inherit;
   font-size: 0.9rem;
+}
+
+select {
+  width: 11.5rem;
+  padding-right: 2rem;
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted) 50%),
+    linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+  background-position:
+    calc(100% - 15px) 52%,
+    calc(100% - 10px) 52%;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.filters input[type='text'] {
+  width: 15rem;
 }
 
 select:focus,
@@ -256,10 +270,44 @@ textarea {
   resize: vertical;
 }
 
+input[type='checkbox'] {
+  appearance: none;
+  position: relative;
+  flex: none;
+  width: 1.1rem;
+  height: 1.1rem;
+  margin: 0;
+  border: 1.5px solid var(--border-strong);
+  border-radius: 4px;
+  background: var(--surface);
+  cursor: pointer;
+}
+
+input[type='checkbox']:hover {
+  border-color: var(--muted);
+}
+
+input[type='checkbox']:checked {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+input[type='checkbox']:checked::after {
+  content: '';
+  position: absolute;
+  left: 0.3rem;
+  top: 0.08rem;
+  width: 0.28rem;
+  height: 0.58rem;
+  border: solid var(--accent-contrast);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
 .filters {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.85rem;
+  gap: 0.9rem 1rem;
   align-items: end;
   margin-bottom: 1.25rem;
 }
@@ -267,9 +315,20 @@ textarea {
 .filters label {
   display: grid;
   gap: 0.25rem;
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   font-weight: 500;
   color: var(--muted);
+}
+
+.filters label.check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 2.3rem;
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--text);
+  cursor: pointer;
 }
 
 .field {
@@ -284,22 +343,19 @@ textarea {
 /* Buttons */
 .btn,
 .pager button {
-  padding: 0.45rem 1rem;
+  padding: 0.42rem 0.95rem;
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-sm);
   background: var(--surface);
   color: var(--text);
   font: inherit;
   font-size: 0.88rem;
-  font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.15s, border-color 0.15s;
 }
 
 .btn:hover:not(:disabled),
 .pager button:hover:not(:disabled) {
   background: var(--surface-2);
-  border-color: var(--muted);
 }
 
 .btn.primary {
@@ -342,7 +398,7 @@ textarea {
 /* Message blocks (outreach drafts, notes) */
 .msg {
   margin-bottom: 0.9rem;
-  padding: 0.85rem 1.1rem;
+  padding: 0.8rem 1rem;
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   background: var(--surface-2);
@@ -353,10 +409,4 @@ textarea {
   font: inherit;
   font-size: 0.9rem;
   white-space: pre-wrap;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  * {
-    transition: none !important;
-  }
 }
