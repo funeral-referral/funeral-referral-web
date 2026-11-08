@@ -1,10 +1,14 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import tailwindcss from '@tailwindcss/vite'
+
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
   ssr: false,
   devServer: { port: 3000 },
-  css: ['~/assets/css/theme.css'],
+  // tailwind.css must stay after theme.css so utilities can override the shared classes.
+  css: ['~/assets/css/theme.css', '~/assets/css/tailwind.css'],
+  vite: { plugins: [tailwindcss()] },
   app: {
     head: {
       meta: [{ name: 'color-scheme', content: 'light dark' }],
